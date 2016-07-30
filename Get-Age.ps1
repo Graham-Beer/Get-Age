@@ -11,47 +11,53 @@
 
 
 Begin {
-# use 'get-date' to convert '$Bday' Variable
-$cDate = (get-date -Date $Bday)
+    # use 'get-date' to convert '$Bday' Variable
+    $cDate = (get-date -Date $Bday)
 
-# from today's date subtract birth date
-$diff = (Get-Date).Subtract($cDate)
+    # from today's date subtract birth date
+    $diff = (Get-Date).Subtract($cDate)
 }
 
 Process {
-
-    if ($diff.Days -le 365) {
-        
-        # comment to host
-        "`nyou are only $($diff.Days) days old !`nYou have another $([int]365 - $diff.Days) days until your birthday" 
     
-    } else {
-    
-    <#
-    // description of below code in steps //
-
-    1. round up age in years and months
-    2. split year and months
-    3. obtain current date and time
-    4. display day and month but remove year .i.e 09/16/
-    5. add the current year onto birthday day and month then subtract from now to obtain how many days until birthday
-    #>
-  
-    <#1.#> $age = [math]::Round( (($diff).days / 365), 1 )
-    
-    <#2.#> $year,$months = $age.tostring().split('.') 
-    
-    <#3.#> $now = [DateTime]::Now 
-    
-    <#4.#> $dm = get-date $Bday -UFormat "%m/%d/" 
-    
-    <#5.#> $Days = [Datetime]($dm + $now.Year) – $Now
-
-    # comment to host
-    "`nYou are $year and $months months old`nYou have another $($Days.days) days until your birthday"
+    # is it a leap year ?
+    switch ([datetime]::IsLeapYear($cDate.Year))
+    {
+        $true  { [int]$daysInYear = '366' }
+        $false { [int]$daysInYear = '365' }
     }
-}
 
-End {}
+    # Work out Years, months and days
+    
+    # years
+    $totalYears = [math]::Truncate( $($diff.Days) / $daysInYear ) 
+    
+    <# months 
+    30 is the average days in a month
+    365 / 12 = 30.4166666666667 
+    [math]::Round(365 / 12) is 30 #>
+    $totalMonths = [math]::Truncate( $($diff.Days) % $daysInYear / [int]30 ) 
+    
+    # days
+    $remainingDays = [math]::Truncate( $($diff.Days) % $daysInYear % [int]30 ) 
+
+    # Work out how many days until birthday    
+    $now = [DateTime]::Now   
+    $dm = get-date $Bday -UFormat "%m/%d/" 
+    $Days = [Datetime]($dm + $now.Year) – $Now    
+}
+        
+End {
+    # display
+    "`nYou are {0} year(s), {1} month(s) and {2} day(s)" -f $totalYears, $totalMonths, $remainingDays
+    
+    # and...
+    if ($cDate.Year -eq (get-date).Year) { 
+        "You have another $($daysInYear - $diff.Days) days until your birthday" # If you are under 1 years old
+    } else { 
+        "You have another $($Days.days) days until your birthday" # over the age of 1 
+    }
+    
+}
 
 }# Function End
