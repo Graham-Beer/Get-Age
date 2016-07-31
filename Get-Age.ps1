@@ -23,7 +23,7 @@ Process {
     # Work out Years, months and days
     [int]$daysInYear = '365'
     [int]$averageMonth = '30'
-    
+      
     # years
     $totalYears = [math]::Truncate( $($diff.Days) / $daysInYear ) 
     
@@ -37,6 +37,7 @@ Process {
     $remainingDays = [math]::Truncate( $($diff.Days) % $daysInYear % $averageMonth ) 
 
     # Your star sign
+    $thisYear = (get-date).Year
      
     $starSign = 
     switch ($cDate.DayOfYear) {
