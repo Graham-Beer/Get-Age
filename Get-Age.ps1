@@ -41,7 +41,8 @@ Process {
      
     $starSign = 
     switch ($cDate.DayOfYear) {
-    
+        
+        # Create an array of numbers using a range of Days of the year to obtain star sign 
         { $_ -in @( ((get-date 22/12/$thisYear).DayOfYear)..365; 0..((get-date 19/01/$thisYear).DayOfYear) ) } { "Capricorn" }
         { $_ -in @( ((get-date 20/01/$thisYear).DayOfYear)..((get-date 18/02/$thisYear).DayOfYear) ) } { "Aquarius" }
         { $_ -in @( ((get-date 19/02/$thisYear).DayOfYear)..((get-date 20/03/$thisYear).DayOfYear) ) } { "Pisces" }
