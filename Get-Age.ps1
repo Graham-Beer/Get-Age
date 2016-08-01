@@ -54,7 +54,7 @@ Process {
         { $_ -in @( ((get-date 23/08/$thisYear).DayOfYear)..((get-date 22/09/$thisYear).DayOfYear) ) } { "Virgo" }
         { $_ -in @( ((get-date 23/09/$thisYear).DayOfYear)..((get-date 22/10/$thisYear).DayOfYear) ) } { "Libra" }
         { $_ -in @( ((get-date 23/10/$thisYear).DayOfYear)..((get-date 21/11/$thisYear).DayOfYear) ) } { "Scorpio" }
-        { $_ -in @( ((get-date 22/10/$thisYear).DayOfYear)..((get-date 21/12/$thisYear).DayOfYear) ) } { "Sagittarius" }
+        { $_ -in @( ((get-date 22/11/$thisYear).DayOfYear)..((get-date 21/12/$thisYear).DayOfYear) ) } { "Sagittarius" }
     } 
     
     # Work out how many days until birthday    
