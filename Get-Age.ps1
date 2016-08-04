@@ -5,7 +5,6 @@
                    HelpMessage="Date must be written as dd/mm/yy",
                    Position=0)]
         [ValidatePattern("^(0[1-9]|[12]\d|3[01])/(0[1-9]|1[0-2])/(\d{2})$")]
-        [ValidateLength(0,8)]
         [string]$Bday    
     )
 
@@ -41,8 +40,7 @@ Process {
      
     $starSign = 
     switch ($cDate.DayOfYear) {
-        
-        # Create an array of numbers using a range of Days of the year to obtain star sign 
+    
         { $_ -in @( ((get-date 22/12/$thisYear).DayOfYear)..365; 0..((get-date 19/01/$thisYear).DayOfYear) ) } { "Capricorn" }
         { $_ -in @( ((get-date 20/01/$thisYear).DayOfYear)..((get-date 18/02/$thisYear).DayOfYear) ) } { "Aquarius" }
         { $_ -in @( ((get-date 19/02/$thisYear).DayOfYear)..((get-date 20/03/$thisYear).DayOfYear) ) } { "Pisces" }
@@ -54,7 +52,7 @@ Process {
         { $_ -in @( ((get-date 23/08/$thisYear).DayOfYear)..((get-date 22/09/$thisYear).DayOfYear) ) } { "Virgo" }
         { $_ -in @( ((get-date 23/09/$thisYear).DayOfYear)..((get-date 22/10/$thisYear).DayOfYear) ) } { "Libra" }
         { $_ -in @( ((get-date 23/10/$thisYear).DayOfYear)..((get-date 21/11/$thisYear).DayOfYear) ) } { "Scorpio" }
-        { $_ -in @( ((get-date 22/11/$thisYear).DayOfYear)..((get-date 21/12/$thisYear).DayOfYear) ) } { "Sagittarius" }
+        { $_ -in @( ((get-date 22/10/$thisYear).DayOfYear)..((get-date 21/12/$thisYear).DayOfYear) ) } { "Sagittarius" }
     } 
     
     # Work out how many days until birthday    
