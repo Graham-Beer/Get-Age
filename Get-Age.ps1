@@ -1,5 +1,4 @@
 ﻿function Get-age {
-
     param( 
         [Parameter(Mandatory=$true,
                    HelpMessage="Date must be written as dd/mm/yy",
@@ -7,7 +6,6 @@
         [ValidatePattern("^(0[1-9]|[12]\d|3[01])/(0[1-9]|1[0-2])/(\d{2})$")]
         [string]$Bday    
     )
-
 
 Begin {
     # use 'get-date' to convert '$Bday' Variable
@@ -58,7 +56,10 @@ Process {
     # Work out how many days until birthday    
     $now = [DateTime]::Now   
     $dm = get-date $Bday -UFormat "%m/%d/" 
-    $Days = [Datetime]($dm + $now.Year) – $Now    
+    $Days = [Datetime]($dm + $now.Year) – $Now
+
+    # If birthday has happened this year change sum
+    if (!($Days -ge 0)) { $Days = $now - [Datetime]($dm + $now.Year) }               
 }
         
 End {
